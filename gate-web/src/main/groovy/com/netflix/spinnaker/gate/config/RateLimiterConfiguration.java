@@ -53,6 +53,11 @@ public class RateLimiterConfiguration {
   Map<String, Integer> capacityByPrincipal = new HashMap<>();
 
   /**
+   * A principal-specific rate override map.
+   */
+  Map<String, Integer> rateSecondsByPrincipal = new HashMap<>();
+
+  /**
    * A list of principals whose capacities are being enforced. This
    * setting will only be used when learning mode is ENABLED, allowing
    * operators to incrementally enable rate limiting on a per-principal
@@ -66,6 +71,22 @@ public class RateLimiterConfiguration {
    * operators to enable learning-mode on a per-principal basis.
    */
   List<String> ignoring = new ArrayList<>();
+
+  public int getCapacity() {
+    return capacity;
+  }
+
+  public int getRateSeconds() {
+    return rateSeconds;
+  }
+
+  public Map<String, Integer> getCapacityByPrincipal() {
+    return capacityByPrincipal;
+  }
+
+  public Map<String, Integer> getRateSecondsByPrincipal() {
+    return rateSecondsByPrincipal;
+  }
 
   public boolean isLearning() {
     return learning;

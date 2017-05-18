@@ -15,7 +15,13 @@
  */
 package com.netflix.spinnaker.gate.ratelimit;
 
-public interface RateLimiter {
+import java.util.List;
 
-  Rate incrementAndGetRate(RateLimitPrincipal principal);
+public interface RateLimitPrincipalProvider {
+
+  RateLimitPrincipal getPrincipal(String name);
+
+  default boolean isLearning(String name, List<String> enforcing, List<String> ignoring, boolean globalLearningFlag) {
+    return !enforcing.contains(name) && (ignoring.contains(name) || globalLearningFlag);
+  }
 }
