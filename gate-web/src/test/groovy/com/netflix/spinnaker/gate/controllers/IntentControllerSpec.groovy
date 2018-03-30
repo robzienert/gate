@@ -32,7 +32,7 @@ class IntentControllerSpec extends Specification {
   def "should update an intent"() {
     given:
     def intentService = Mock(IntentService)
-    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new IntentController(intentService: intentService)).build()
+    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new IntentController(intentService, false)).build()
 
     and:
     def intent = [
@@ -84,7 +84,7 @@ class IntentControllerSpec extends Specification {
     ).andReturn().response
 
     then:
-    1 * intentService.upsertIntent(intentRequest) >> [ [ intentId: "myintentId", intentStatus: "ACTIVE" ] ]
+    1 * intentService.upsertIntents(intentRequest) >> [[intentId: "myintentId", intentStatus: "ACTIVE" ] ]
     response.status == 200
 
   }
@@ -92,7 +92,7 @@ class IntentControllerSpec extends Specification {
   def "should get an intent"() {
     given:
     def intentService = Mock(IntentService)
-    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new IntentController(intentService: intentService)).build()
+    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new IntentController(intentService, false)).build()
 
     def intent = [
       kind: "Application",
@@ -138,7 +138,7 @@ class IntentControllerSpec extends Specification {
   def "should delete an intent"() {
     given:
     def intentService = Mock(IntentService)
-    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new IntentController(intentService: intentService)).build()
+    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new IntentController(intentService, false)).build()
 
     when:
     def response = mockMvc.perform(delete("/intents/myintent")).andReturn().response

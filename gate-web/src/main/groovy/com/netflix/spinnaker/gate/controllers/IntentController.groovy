@@ -21,6 +21,7 @@ import com.netflix.spinnaker.kork.web.exceptions.NotFoundException
 import groovy.util.logging.Slf4j
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -35,15 +36,21 @@ import org.springframework.web.bind.annotation.RestController
 @Slf4j
 class IntentController {
 
+  private final IntentService intentService
+  private boolean dryRunUpsertOnly
+
   @Autowired
-  IntentService intentService
+  IntentController(IntentService intentService,
+                   @Value('${services.keel.dryRunUpsertOnly:true}') boolean dryRunUpsertOnly) {
+    this.intentService = intentService
+    this.dryRunUpsertOnly = dryRunUpsertOnly
+  }
 
   @ApiOperation(value = "Retrieve an intent")
   @RequestMapping(value = "/{intentId}", method = RequestMethod.GET)
   Map getIntent(@PathVariable(name = "intentId") String intentId) {
     def result = intentService.getIntent(intentId)
     if (!result){
-      log.warn("Intent {} not found", value("intent", intentId))
       throw new NotFoundException("Intent not found (id: $intentId)")
     }
     return result
@@ -64,7 +71,11 @@ class IntentController {
   @ApiOperation(value = "Upsert an intent")
   @RequestMapping(value = "", method = RequestMethod.POST)
   List<Map> upsertIntents(@RequestBody Map upsertIntentRequest) {
-    return intentService.upsertIntent(upsertIntentRequest)
+    if (dryRunUpsertOnly) {
+      log.debug("Forcing dry-run on intent upsert request (change with 'services.keel.dryRunUpsertOnly=true')")
+      upsertIntentRequest["dryRun"] = true
+    }
+    return intentService.upsertIntents(upsertIntentRequest)
   }
 
   @ApiOperation(value = "Retrieve history for an intent")

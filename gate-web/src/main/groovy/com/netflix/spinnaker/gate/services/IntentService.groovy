@@ -45,7 +45,7 @@ class IntentService {
     return keelService.deleteIntent(intentId)
   }
 
-  List<Map> upsertIntent(Map upsertIntentRequest) {
+  List<Map> upsertIntents(Map upsertIntentRequest) {
     return keelService.upsertIntent(upsertIntentRequest)
   }
 
