@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.spinnaker.gate.plugins.deck
+package com.netflix.spinnaker.gate.plugins.web.deck
 
 import com.netflix.spectator.api.Id
 import com.netflix.spectator.api.Registry
@@ -75,7 +75,8 @@ class DeckPluginCache(
       val newCache = releases.mapNotNull { release ->
             val plugin = DeckPluginVersion(release.pluginId, release.props.version)
             getOrDownload(plugin.id, plugin.version)?.let {
-              path -> PluginCacheEntry(plugin, path)
+              path ->
+              PluginCacheEntry(plugin, path)
             }
       }
 

@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.spinnaker.gate.plugins.deck
+package com.netflix.spinnaker.gate.plugins.config
 
-/**
- * A plugin manifest used by Deck to know what plugins should be installed and at what version.
- *
- * @param id The plugin ID
- * @param version The plugin version
- */
-data class DeckPluginVersion(
-  val id: String,
-  val version: String
-)
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Configuration
+
+@Configuration
+@ComponentScan("com.netflix.spinnaker.gate.plugins.web")
+class PluginWebConfiguration

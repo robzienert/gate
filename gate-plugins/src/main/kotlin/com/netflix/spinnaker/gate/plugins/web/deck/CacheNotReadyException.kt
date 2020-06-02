@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.spinnaker.gate.plugins.deck
+package com.netflix.spinnaker.gate.plugins.web.deck
 
 import com.netflix.spinnaker.kork.exceptions.SystemException
 

@@ -18,8 +18,9 @@ package com.netflix.spinnaker.gate.plugins.web.info
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.netflix.spinnaker.gate.config.ServiceConfiguration
-import com.netflix.spinnaker.gate.plugins.web.PluginWebConfiguration
-import com.netflix.spinnaker.gate.plugins.web.SpinnakerExtensionsConfigProperties
+import com.netflix.spinnaker.gate.plugins.config.PluginWebConfiguration
+import com.netflix.spinnaker.gate.plugins.web.PluginInfoController
+import com.netflix.spinnaker.gate.plugins.config.SpinnakerExtensionsConfigProperties
 import com.netflix.spinnaker.gate.services.TaskService
 import com.netflix.spinnaker.gate.services.internal.Front50Service
 import com.netflix.spinnaker.kork.web.exceptions.GenericExceptionHandlers

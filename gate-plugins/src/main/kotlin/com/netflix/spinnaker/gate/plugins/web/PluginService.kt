@@ -16,6 +16,7 @@
 
 package com.netflix.spinnaker.gate.plugins.web
 
+import com.netflix.spinnaker.gate.plugins.config.SpinnakerExtensionsConfigProperties
 import com.netflix.spinnaker.gate.services.TaskService
 import com.netflix.spinnaker.kork.exceptions.UserException
 import com.netflix.spinnaker.kork.plugins.update.internal.SpinnakerPluginInfo

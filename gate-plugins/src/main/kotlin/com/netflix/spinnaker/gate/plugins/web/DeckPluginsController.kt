@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.spinnaker.gate.plugins.deck
+package com.netflix.spinnaker.gate.plugins.web
 
+import com.netflix.spinnaker.gate.plugins.web.deck.CacheNotReadyException
+import com.netflix.spinnaker.gate.plugins.web.deck.DeckPluginService
+import com.netflix.spinnaker.gate.plugins.web.deck.DeckPluginVersion
 import com.netflix.spinnaker.kork.web.exceptions.NotFoundException
 import io.swagger.annotations.ApiOperation
 import java.util.concurrent.TimeUnit
 import javax.servlet.http.HttpServletResponse
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.http.CacheControl
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,7 +33,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/plugins/deck")
-@ConditionalOnProperty("spinnaker.extensibility.deck-proxy.enabled", matchIfMissing = true)
 class DeckPluginsController(
   private val deckPluginService: DeckPluginService
 ) {

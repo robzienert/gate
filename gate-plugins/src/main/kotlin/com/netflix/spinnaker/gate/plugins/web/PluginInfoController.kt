@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.spinnaker.gate.plugins.web.info
+package com.netflix.spinnaker.gate.plugins.web
 
-import com.netflix.spinnaker.gate.plugins.web.PluginService
-import com.netflix.spinnaker.gate.plugins.web.SpinnakerExtensionsConfigProperties
+import com.netflix.spinnaker.gate.plugins.config.SpinnakerExtensionsConfigProperties
 import com.netflix.spinnaker.gate.services.internal.Front50Service
 import com.netflix.spinnaker.kork.plugins.update.internal.SpinnakerPluginInfo
 import io.swagger.annotations.ApiOperation

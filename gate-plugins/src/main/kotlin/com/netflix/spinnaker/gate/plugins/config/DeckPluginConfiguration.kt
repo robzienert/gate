@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.netflix.spinnaker.gate.plugins.deck
+package com.netflix.spinnaker.gate.plugins.config
 
 import com.netflix.spectator.api.Registry
+import com.netflix.spinnaker.gate.plugins.web.deck.DeckPluginCache
+import com.netflix.spinnaker.gate.plugins.web.deck.DeckPluginService
 import com.netflix.spinnaker.kork.dynamicconfig.DynamicConfigService
 import com.netflix.spinnaker.kork.plugins.SpringPluginStatusProvider
 import com.netflix.spinnaker.kork.plugins.SpringStrictPluginLoaderStatusProvider

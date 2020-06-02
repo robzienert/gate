@@ -36,8 +36,8 @@ import com.netflix.spinnaker.gate.config.PostConnectionConfiguringJedisConnectio
 import com.netflix.spinnaker.gate.converters.JsonHttpMessageConverter
 import com.netflix.spinnaker.gate.converters.YamlHttpMessageConverter
 import com.netflix.spinnaker.gate.filters.RequestLoggingFilter
-import com.netflix.spinnaker.gate.plugins.deck.DeckPluginConfiguration
-import com.netflix.spinnaker.gate.plugins.web.PluginWebConfiguration
+import com.netflix.spinnaker.gate.plugins.config.DeckPluginConfiguration
+import com.netflix.spinnaker.gate.plugins.config.PluginWebConfiguration
 import com.netflix.spinnaker.gate.retrofit.Slf4jRetrofitLogger
 import com.netflix.spinnaker.gate.services.EurekaLookupService
 import com.netflix.spinnaker.gate.services.internal.*
