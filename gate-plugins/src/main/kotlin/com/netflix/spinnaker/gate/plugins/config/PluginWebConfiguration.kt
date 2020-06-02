@@ -15,9 +15,47 @@
  */
 package com.netflix.spinnaker.gate.plugins.config
 
+import com.netflix.spectator.api.Registry
+import com.netflix.spinnaker.gate.plugins.web.deck.DeckPluginCache
+import com.netflix.spinnaker.kork.dynamicconfig.DynamicConfigService
+import com.netflix.spinnaker.kork.plugins.SpringPluginStatusProvider
+import com.netflix.spinnaker.kork.plugins.SpringStrictPluginLoaderStatusProvider
+import com.netflix.spinnaker.kork.plugins.bundle.PluginBundleExtractor
+import com.netflix.spinnaker.kork.plugins.update.SpinnakerUpdateManager
+import com.netflix.spinnaker.kork.plugins.update.release.provider.AggregatePluginInfoReleaseProvider
+import com.netflix.spinnaker.kork.plugins.update.release.source.LatestPluginInfoReleaseSource
+import com.netflix.spinnaker.kork.plugins.update.release.source.SpringPluginInfoReleaseSource
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.scheduling.annotation.EnableScheduling
 
 @Configuration
+@EnableScheduling
 @ComponentScan("com.netflix.spinnaker.gate.plugins.web")
-class PluginWebConfiguration
+class PluginWebConfiguration {
+
+  @Bean
+  fun deckPluginCache(
+    updateManager: SpinnakerUpdateManager,
+    registry: Registry,
+    springStrictPluginLoaderStatusProvider: SpringStrictPluginLoaderStatusProvider,
+    dynamicConfigService: DynamicConfigService
+  ): DeckPluginCache {
+    val springPluginStatusProvider = SpringPluginStatusProvider(dynamicConfigService,
+      "spinnaker.extensibility.deck-proxy.plugins")
+
+    val sources = listOf(
+      LatestPluginInfoReleaseSource(updateManager, "deck"),
+      SpringPluginInfoReleaseSource(springPluginStatusProvider)
+    )
+
+    return DeckPluginCache(
+      updateManager,
+      PluginBundleExtractor(springStrictPluginLoaderStatusProvider),
+      springPluginStatusProvider,
+      AggregatePluginInfoReleaseProvider(sources, springStrictPluginLoaderStatusProvider),
+      registry,
+      springStrictPluginLoaderStatusProvider)
+  }
+}

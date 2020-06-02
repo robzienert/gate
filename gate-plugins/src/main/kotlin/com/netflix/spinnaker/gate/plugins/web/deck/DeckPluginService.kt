@@ -18,11 +18,13 @@ package com.netflix.spinnaker.gate.plugins.web.deck
 import com.netflix.spectator.api.Registry
 import java.io.File
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 
 /**
  * Provides Deck with means of discovering what plugins it needs to download and a standard interface for
  * retrieving plugin assets.
  */
+@Service
 class DeckPluginService(
   private val pluginCache: DeckPluginCache,
   private val registry: Registry
