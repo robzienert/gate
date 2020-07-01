@@ -87,7 +87,7 @@ class ApplicationService {
       throw ee.cause
     }
     List<Map> flat = (List<Map>) all?.flatten()?.toList()
-    return mergeApps(flat, serviceConfiguration.getService('front50')).collect {
+    return mergeApps(flat, serviceConfiguration.getRequiredService('front50')).collect {
       it.attributes
     } as List<Map>
   }
@@ -112,7 +112,7 @@ class ApplicationService {
         applications.add(0, cachedApplication)
       }
     }
-    List<Map> mergedApps = mergeApps(applications, serviceConfiguration.getService('front50'))
+    List<Map> mergedApps = mergeApps(applications, serviceConfiguration.getRequiredService('front50'))
     return mergedApps ? mergedApps[0] : null
   }
 

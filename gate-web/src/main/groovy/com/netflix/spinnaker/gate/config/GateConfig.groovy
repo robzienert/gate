@@ -220,8 +220,8 @@ class GateConfig extends RedisHttpSessionConfiguration {
                                                         DynamicRoutingConfigProperties properties,
                                                         RequestContextProvider contextProvider
   ) {
-    if (serviceConfiguration.getService("clouddriver").getConfig().containsKey("dynamicEndpoints")) {
-      def endpoints = (Map<String, String>) serviceConfiguration.getService("clouddriver").getConfig().get("dynamicEndpoints")
+    if (serviceConfiguration.getRequiredService("clouddriver").getConfig().containsKey("dynamicEndpoints")) {
+      def endpoints = (Map<String, String>) serviceConfiguration.getRequiredService("clouddriver").getConfig().get("dynamicEndpoints")
       // translates the following config:
       //   dynamicEndpoints:
       //     deck: url
@@ -315,10 +315,7 @@ class GateConfig extends RedisHttpSessionConfiguration {
                              OkHttpClientProvider clientProvider,
                              String dynamicName = null,
                              boolean forceEnabled = false) {
-    Service service = serviceConfiguration.getService(serviceName)
-    if (service == null) {
-      throw new IllegalArgumentException("Unknown service ${serviceName} requested of type ${type}")
-    }
+    Service service = serviceConfiguration.getRequiredService(serviceName)
 
     if (!service.enabled && !forceEnabled) {
       return null
@@ -348,8 +345,8 @@ class GateConfig extends RedisHttpSessionConfiguration {
   }
 
   private <T> SelectableService createClientSelector(String serviceName, Class<T> type, OkHttpClientProvider clientProvider) {
-    Service service = serviceConfiguration.getService(serviceName)
-    if (CollectionUtils.isEmpty(service?.getBaseUrls())) {
+    Service service = serviceConfiguration.getRequiredService(serviceName)
+    if (CollectionUtils.isEmpty(service.getBaseUrls())) {
       throw new IllegalArgumentException("Unknown service ${serviceName} requested of type ${type}")
     }
 

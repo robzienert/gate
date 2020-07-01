@@ -72,11 +72,7 @@ class GremlinConfig {
       EurekaLookupService eurekaLookupService,
       RequestInterceptor spinnakerRequestInterceptor,
       String retrofitLogLevel) {
-    Service service = serviceConfiguration.getService(serviceName);
-    if (service == null) {
-      throw new IllegalArgumentException(
-          "Unknown service ${serviceName} requested of type ${type}");
-    }
+    Service service = serviceConfiguration.getRequiredService(serviceName);
 
     if (!service.isEnabled()) {
       return null;
