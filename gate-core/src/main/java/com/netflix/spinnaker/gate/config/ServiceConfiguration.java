@@ -88,6 +88,10 @@ public class ServiceConfiguration {
     return endpoint;
   }
 
+  public List<String> getDiscoveryHosts() {
+    return discoveryHosts;
+  }
+
   private boolean hasHealthcheckableServices() {
     return healthCheckableServices != null && !healthCheckableServices.isEmpty();
   }
