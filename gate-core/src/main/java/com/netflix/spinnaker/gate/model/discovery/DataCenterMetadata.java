@@ -1,11 +1,11 @@
 /*
- * Copyright 2014 Netflix, Inc.
+ * Copyright 2020 Netflix, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
+package com.netflix.spinnaker.gate.model.discovery;
 
-package com.netflix.spinnaker.gate.model.discovery
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-import com.fasterxml.jackson.annotation.JsonProperty
-import groovy.transform.EqualsAndHashCode
+@Data
+public class DataCenterMetadata {
+  @JsonProperty("availability-zone")
+  private String availabilityZone;
 
-@EqualsAndHashCode
-class DataCenterMetadata {
-  @JsonProperty('availability-zone')
-  String availabilityZone
+  @JsonProperty("instance-id")
+  private String instanceId;
 
-  @JsonProperty('instance-id')
-  String instanceId
+  @JsonProperty("ami-id")
+  private String amiId;
 
-  @JsonProperty('ami-id')
-  String amiId
-
-  @JsonProperty('instance-type')
-  String instanceType
+  @JsonProperty("instance-type")
+  private String instanceType;
 }
-
