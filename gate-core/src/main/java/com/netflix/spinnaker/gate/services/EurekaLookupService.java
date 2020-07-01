@@ -26,6 +26,7 @@ public class EurekaLookupService {
 
   private static final Map<String, CachedDiscoveryApplication> instanceCache =
       new ConcurrentHashMap<>();
+  private static final Map<String, EurekaService> eurekaServiceCache = new ConcurrentHashMap<>();
 
   private ServiceConfiguration serviceConfiguration;
   private OkHttpClient okHttpClient;
@@ -81,20 +82,24 @@ public class EurekaLookupService {
   }
 
   private EurekaService getEurekaService(String host) {
-    Endpoint endpoint = Endpoints.newFixedEndpoint(host);
-    return new RestAdapter.Builder()
-        .setEndpoint(endpoint)
-        .setConverter(
-            new JacksonConverter(
-                new ObjectMapper()
-                    .configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true)
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                    .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)))
-        .setClient(new Ok3Client(okHttpClient))
-        .setLogLevel(RestAdapter.LogLevel.BASIC)
-        .setLog(new Slf4jRetrofitLogger(EurekaService.class))
-        .build()
-        .create(EurekaService.class);
+    return eurekaServiceCache.computeIfAbsent(
+        host,
+        s -> {
+          Endpoint endpoint = Endpoints.newFixedEndpoint(host);
+          return new RestAdapter.Builder()
+              .setEndpoint(endpoint)
+              .setConverter(
+                  new JacksonConverter(
+                      new ObjectMapper()
+                          .configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true)
+                          .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                          .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)))
+              .setClient(new Ok3Client(okHttpClient))
+              .setLogLevel(RestAdapter.LogLevel.BASIC)
+              .setLog(new Slf4jRetrofitLogger(EurekaService.class))
+              .build()
+              .create(EurekaService.class);
+        });
   }
 
   @Data
