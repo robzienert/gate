@@ -38,10 +38,3 @@ dependencies {
   implementation "com.github.ben-manes.caffeine:guava"
   implementation "org.apache.commons:commons-lang3"
 }
-
-sourceSets {
-  main {
-    java { srcDirs = [] }
-    groovy { srcDirs += ['src/main/java'] }
-  }
-}
